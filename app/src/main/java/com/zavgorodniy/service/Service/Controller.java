@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nick on 02.03.16.
+ * controls the communication with the server and data
+ * @author Lego
+ * @version 1.0
  */
 public class Controller {
     static private Controller controller;

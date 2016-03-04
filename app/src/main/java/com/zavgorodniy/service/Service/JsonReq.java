@@ -1,8 +1,5 @@
 package com.zavgorodniy.service.Service;
 
-/**
- * Created by Lego on 02.03.2016.
- */
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -21,22 +18,44 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Connect to server, create request, accept data and parse it
+ * @author Lego
+ * @version 1.0
+ */
 public class JsonReq extends AsyncTask<Integer, Integer, String> {
 
+    /**variable holds http connection */
     HttpURLConnection urlConnection = null;
+
+    /**variable stores input stream data */
     BufferedReader reader = null;
+
+    /**request result */
     String resultJson = "";
+
+    /**save info to list in class controller */
     Controller controller;
+
+    /**holds reference to MainActivity */
     AsyncResult asyncResult;
 
+    /** Logs*/
     public static String LOG_TAG = "my_log";
 
+    /**
+     * Accept reference to MainActivity
+     * @param asyncResult
+     */
     public JsonReq(JsonReq.AsyncResult asyncResult){
         this.asyncResult = asyncResult;
     }
 
-
+    /**
+     * Connect to server and send request, then getting json result
+     * @param params holds id of genre
+     * @return
+     */
     @Override
     protected String doInBackground(Integer... params) {
         try {
@@ -62,6 +81,10 @@ public class JsonReq extends AsyncTask<Integer, Integer, String> {
         return resultJson;
     }
 
+    /**
+     * Parse request and put date in arraylist
+     * @param strJson
+     */
     @Override
     protected void onPostExecute(String strJson) {
         super.onPostExecute(strJson);
@@ -99,12 +122,19 @@ public class JsonReq extends AsyncTask<Integer, Integer, String> {
         }
     }
 
+    /**
+     * //TODO progressbar
+     * @param result
+     */
     @Override
     protected void onProgressUpdate(Integer... result) {
         // [... Сообщите о результате через обновление пользовательского
         // интерфейса, диалоговое окно или уведомление ...]
     }
 
+    /**
+     * reference to MainActivity
+     */
     public interface AsyncResult{
         void onResult(List<Item> Item);
     }
