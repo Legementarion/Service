@@ -9,14 +9,14 @@ import java.util.List;
 public class Controller {
     static private Controller controller;
 
-    private static List<Item> items = new ArrayList<>();
+    private static List<Item> items;
 
     private Controller(){
 
     }
 
     public void start(int value){
-//        items.clear();
+        items = new ArrayList<>();
         JsonReq jsonReq  = new JsonReq();
         jsonReq.execute(value);
 

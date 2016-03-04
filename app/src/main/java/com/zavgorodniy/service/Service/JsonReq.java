@@ -7,6 +7,8 @@ package com.zavgorodniy.service.Service;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.zavgorodniy.service.Activity.MainActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +85,7 @@ public class JsonReq extends AsyncTask<Integer, Integer, String> {
 
                 Item item = new Item(name,genre,date,rating,description,imageId);
                 controller.setItems(item);
+                MainActivity.setFlag();
             }
 
         } catch (JSONException e) {

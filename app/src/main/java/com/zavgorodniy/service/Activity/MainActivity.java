@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> rangeListAdapter;
     Intent itemInfo;
     String genre;
+    private static boolean flag;
 
     Item item;
 
@@ -99,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public static void setFlag() {
+        flag = true;
     }
 
     class OnRequestItemClick implements AdapterView.OnItemClickListener {
@@ -213,6 +218,16 @@ public class MainActivity extends AppCompatActivity {
     private void sendRequest(int request) {
         itemsListAdapter.clear();
         controller.start(request);
+        Toast.makeText(MainActivity.this, "Ожидание ответа от сервера", Toast.LENGTH_SHORT).show();
+        int i = 0;
+        while(flag == false){
+            try {
+                Thread.sleep(1000);
+                System.out.println(i++);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         itemsList = controller.getItems();
         itemsListAdapter.addAll(itemsList);
         itemsListAdapter.notifyDataSetChanged();
