@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         mViewFilms.setAdapter(mAdapterFilms);
         mViewFilms.setOnItemClickListener(new OnItemClick());
 
-
+        controller = Controller.getInstance();
+        controller.start(18);
 
     }
 
