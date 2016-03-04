@@ -7,6 +7,8 @@ package com.zavgorodniy.service.Service;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.zavgorodniy.service.Activity.MainActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class JsonReq extends AsyncTask<Integer, Integer, String> {
@@ -24,8 +28,13 @@ public class JsonReq extends AsyncTask<Integer, Integer, String> {
     BufferedReader reader = null;
     String resultJson = "";
     Controller controller;
+    AsyncResult asyncResult;
 
     public static String LOG_TAG = "my_log";
+
+    public JsonReq(JsonReq.AsyncResult asyncResult){
+        this.asyncResult = asyncResult;
+    }
 
 
     @Override
@@ -56,7 +65,6 @@ public class JsonReq extends AsyncTask<Integer, Integer, String> {
     @Override
     protected void onPostExecute(String strJson) {
         super.onPostExecute(strJson);
-
         controller = Controller.getInstance();
 
         JSONObject dataJsonObj;
@@ -85,6 +93,7 @@ public class JsonReq extends AsyncTask<Integer, Integer, String> {
                 controller.setItems(item);
             }
 
+            asyncResult.onResult(controller.getItems());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -94,6 +103,10 @@ public class JsonReq extends AsyncTask<Integer, Integer, String> {
     protected void onProgressUpdate(Integer... result) {
         // [... Сообщите о результате через обновление пользовательского
         // интерфейса, диалоговое окно или уведомление ...]
+    }
+
+    public interface AsyncResult{
+        void onResult(List<Item> Item);
     }
 }
 

@@ -15,13 +15,14 @@ import com.zavgorodniy.service.Adapter.RequestListAdapter;
 import com.zavgorodniy.service.R;
 import com.zavgorodniy.service.Service.Controller;
 import com.zavgorodniy.service.Service.Item;
+import com.zavgorodniy.service.Service.JsonReq;
 import com.zavgorodniy.service.Service.RequestItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements JsonReq.AsyncResult {
     Controller controller;
     List<Item> itemsList;
     ItemListAdapter itemsListAdapter;
@@ -95,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 
     class OnRequestItemClick implements AdapterView.OnItemClickListener {
 
@@ -173,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     class OnItemClick implements AdapterView.OnItemClickListener {
 
         @Override
@@ -207,7 +211,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendRequest(int request) {
         itemsListAdapter.clear();
-        controller.start(request);
+        controller.start(this,request);
+    }
+
+    @Override
+    public void onResult(List<Item> Items) {
         itemsList = controller.getItems();
         itemsListAdapter.addAll(itemsList);
         itemsListAdapter.notifyDataSetChanged();
